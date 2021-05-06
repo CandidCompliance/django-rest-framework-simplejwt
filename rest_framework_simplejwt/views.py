@@ -28,7 +28,11 @@ class TokenViewBase(generics.GenericAPIView):
         except TokenError as e:
             raise InvalidToken(e.args[0])
 
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        headers = {}
+        if serializer.validated_data['access']:
+            headers['Set-Cookie'] = 'candidcompliance-auth='+ serializer.validated_data['access']
+
+        return Response(serializer.validated_data, headers=headers, status=status.HTTP_200_OK)
 
 
 class TokenObtainPairView(TokenViewBase):
