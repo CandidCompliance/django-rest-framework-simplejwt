@@ -30,7 +30,7 @@ class TokenViewBase(generics.GenericAPIView):
 
         headers = {}
         if serializer.validated_data['access']:
-            headers['Set-Cookie'] = 'candidcompliance-auth='+ serializer.validated_data['access'] + '; HttpOnly'
+            headers['Set-Cookie'] = 'candidcompliance-auth='+ serializer.validated_data['access'] + '; HttpOnly; Path=/; SameSite=Lax'
 
         return Response(serializer.validated_data, headers=headers, status=status.HTTP_200_OK)
 
